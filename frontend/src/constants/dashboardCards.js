@@ -1,0 +1,55 @@
+import {
+  RiTempColdLine,
+  RiWaterFlashLine,
+  RiTestTubeLine,
+  RiFlashlightLine,
+  RiSeedlingLine,
+} from "react-icons/ri";
+
+export const dashboardCards = [
+  {
+    id: 1,
+    title: "Temperature",
+    value: "-- °C",
+    icon: RiTempColdLine,
+    color: "from-sky-500 to-blue-600",
+   bg: "bg-sky-100",
+   progress: "from-sky-500 to-blue-600",
+  },
+  {
+    id: 2,
+    title: "Humidity",
+    value: "-- %",
+    icon: RiWaterFlashLine,
+    color: "from-cyan-500 to-sky-500",
+    bg: "bg-cyan-100",
+    progress: "from-cyan-500 to-sky-500",
+  },
+  {
+    id: 3,
+    title: "pH Level",
+    value: "--",
+    icon: RiTestTubeLine,
+    color: "from-orange-500 to-amber-500",
+    bg: "bg-orange-100",
+    progress: "from-orange-500 to-amber-500",
+  },
+  {
+    id: 4,
+    title: "EC",
+    value: "--",
+    icon: RiFlashlightLine,
+    color: "from-violet-500 to-purple-600",
+    bg: "bg-violet-100",
+    progress: "from-violet-500 to-purple-600",
+  },
+  {
+    id: 5,
+    title: "Water Level",
+    value: "-- %",
+    icon: RiSeedlingLine,
+    color: "from-emerald-500 to-green-600",
+    bg: "bg-emerald-100",
+    progress: "from-emerald-500 to-green-600",
+  },
+];
