@@ -20,13 +20,13 @@ function SummaryCard({
             {title}
           </p>
 
-          <h2 className="mt-3 text-3xl font-bold text-slate-900">
+          <h2 className="mt-3 text-2xl font-bold text-slate-900 md:text-3xl">
             {value}
           </h2>
         </div>
 
         <div
-          className={`flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br ${color} text-white shadow-lg`}
+          className={`flex  h-12 w-12 md:h-14 md:w-14 items-center justify-center rounded-2xl bg-gradient-to-br ${color} text-white shadow-lg`}
         >
           <Icon size={28} />
         </div>

@@ -82,7 +82,7 @@ function Dashboard() {
   return (
     <>
       {/* Hero Section */}
-      <div className="mb-10 flex items-center justify-between rounded-3xl bg-gradient-to-r from-slate-900 via-slate-800 to-blue-900 p-8 text-white shadow-xl">
+      <div className="mb-8 flex flex-col gap-8 rounded-3xl bg-gradient-to-r from-slate-900 via-slate-800 to-blue-900 p-6 text-white shadow-xl lg:flex-row lg:items-center lg:justify-between lg:p-8">
 
         {/* Left Section */}
         <div>
@@ -90,22 +90,22 @@ function Dashboard() {
             Hydroponics Monitoring System
           </p>
 
-          <h1 className="mt-3 text-5xl font-extrabold">
+         <h1 className="mt-3 text-3xl font-extrabold md:text-4xl xl:text-5xl">
             Welcome Back,
             <span className="block bg-gradient-to-r from-cyan-300 to-blue-400 bg-clip-text text-transparent">
               Sumit Sharma 👋
             </span>
           </h1>
 
-          <p className="mt-4 max-w-xl text-lg text-slate-300">
+          <p className="mt-4 max-w-xl text-base text-slate-300 md:text-lg">
             Monitor every sensor, device, and alert from one modern dashboard.
             Stay informed with real-time hydroponics insights.
           </p>
         </div>
 
         {/* Right Section */}
-        <div className="hidden flex-col items-end lg:flex">
-          <div className="rounded-2xl bg-white/10 px-6 py-4 backdrop-blur-md">
+        <div className="w-full lg:w-auto">
+          <div className="rounded-2xl bg-white/10 p-5 backdrop-blur-md lg:min-w-[260px]">
             <p className="text-sm text-slate-300">
               System Status
             </p>
@@ -126,7 +126,7 @@ function Dashboard() {
       <SummaryCards dashboard={dashboard} />
 
       {/* Charts */}
-      <div className="mt-14 grid gap-8 xl:grid-cols-2">
+      <div className="mt-10 grid gap-6 xl:grid-cols-2">
 
         <LineChartCard
           title="Temperature Trend"

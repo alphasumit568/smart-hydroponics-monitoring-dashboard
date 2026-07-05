@@ -1,132 +1,156 @@
 import { NavLink } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
+import { RiCloseLine } from "react-icons/ri";
 
 import Logo from "../Common/Logo";
 import { navigation } from "../../constants/navigation";
 import { getDashboard } from "../../services/dashboardService";
 
-
-function Sidebar() {
+function Sidebar({ sidebarOpen, setSidebarOpen }) {
   const [dashboard, setDashboard] = useState(null);
 
-useEffect(() => {
-  async function fetchDashboard() {
-    try {
-      const data = await getDashboard();
-      setDashboard(data);
-    } catch (error) {
-      console.error("Failed to load dashboard:", error);
+  useEffect(() => {
+    async function fetchDashboard() {
+      try {
+        const data = await getDashboard();
+        setDashboard(data);
+      } catch (error) {
+        console.error("Failed to load dashboard:", error);
+      }
     }
-  }
 
-  fetchDashboard();
-}, []);
+    fetchDashboard();
+  }, []);
 
-const apiStatus = dashboard ? "Running" : "Connecting...";    
+  const apiStatus = dashboard ? "Running" : "Connecting...";
 
   return (
-    <aside className="flex h-screen w-[290px] flex-col bg-slate-950 px-6 py-8 text-white shadow-2xl">
+    <>
+      {/* Mobile Overlay */}
+      {sidebarOpen && (
+        <div
+          onClick={() => setSidebarOpen(false)}
+          className="fixed inset-0 z-40 bg-black/50 lg:hidden"
+        />
+      )}
 
-      {/* Logo */}
-      <Logo />
+      <aside
+        className={`fixed left-0 top-0 z-50 flex h-screen w-[290px] flex-col bg-slate-950 px-6 py-8 text-white shadow-2xl transition-transform duration-300
+        ${
+          sidebarOpen ? "translate-x-0" : "-translate-x-full"
+        }
+        lg:static lg:translate-x-0`}
+      >
+        {/* Mobile Close Button */}
+        <div className="mb-6 flex items-center justify-between lg:hidden">
+          <Logo />
 
-      {/* Navigation */}
-      <nav className="mt-10 flex flex-col gap-3">
+          <button
+            onClick={() => setSidebarOpen(false)}
+            className="rounded-xl bg-slate-800 p-2"
+          >
+            <RiCloseLine size={24} />
+          </button>
+        </div>
 
-        {navigation.map((item) => {
-          const Icon = item.icon;
+        {/* Desktop Logo */}
+        <div className="hidden lg:block">
+          <Logo />
+        </div>
 
-          return (
-            <NavLink
-              key={item.id}
-              to={item.path}
-              className={({ isActive }) =>
-                `group relative flex items-center gap-4 rounded-2xl px-5 py-4 text-lg font-medium transition-all duration-300
-                ${
-                  isActive
-                    ? "bg-gradient-to-r from-blue-600 to-indigo-500 shadow-lg"
-                    : "text-slate-300 hover:bg-slate-800 hover:text-white"
-                }`
-              }
-            >
-              <motion.div whileHover={{ scale: 1.15 }}>
-                <Icon size={24} />
-              </motion.div>
+        {/* Navigation */}
+        <nav className="mt-10 flex flex-col gap-3">
+          {navigation.map((item) => {
+            const Icon = item.icon;
 
-              {item.title}
-            </NavLink>
-          );
-        })}
+            return (
+              <NavLink
+                key={item.id}
+                to={item.path}
+                onClick={() => setSidebarOpen(false)}
+                className={({ isActive }) =>
+                  `group flex items-center gap-4 rounded-2xl px-5 py-4 text-lg font-medium transition-all duration-300
+                  ${
+                    isActive
+                      ? "bg-gradient-to-r from-blue-600 to-indigo-500 shadow-lg"
+                      : "text-slate-300 hover:bg-slate-800 hover:text-white"
+                  }`
+                }
+              >
+                <motion.div whileHover={{ scale: 1.15 }}>
+                  <Icon size={24} />
+                </motion.div>
 
-      </nav>
+                {item.title}
+              </NavLink>
+            );
+          })}
+        </nav>
 
-      <div className="flex-1" />
+        <div className="flex-1" />
 
-      {/* Status Card */}
-{/* Status Card */}
+        {/* Status Card */}
+        <div className="rounded-3xl bg-slate-900 p-5 shadow-xl">
 
-<div className="rounded-3xl bg-slate-900 p-5 shadow-xl">
+          <div className="flex items-center gap-2">
+            <div className="h-3 w-3 animate-pulse rounded-full bg-emerald-400" />
 
-  <div className="flex items-center gap-2">
+            <h3 className="font-semibold">
+              System Status
+            </h3>
+          </div>
 
-    <div className="h-3 w-3 animate-pulse rounded-full bg-emerald-400" />
+          <p className="mt-2 text-sm text-slate-400">
+            All Systems Operational
+          </p>
 
-    <h3 className="font-semibold text-white">
-      System Status
-    </h3>
+          <div className="mt-6 space-y-3">
 
-  </div>
+            <div className="flex items-center justify-between rounded-xl bg-slate-800 px-4 py-3">
+              <span className="text-sm text-slate-300">
+                Online Devices
+              </span>
 
-  <p className="mt-2 text-sm text-slate-400">
-    All Systems Operational
-  </p>
+              <span className="font-semibold text-emerald-400">
+                {dashboard?.onlineDevices ?? "--"}
+              </span>
+            </div>
 
-  <div className="mt-6 space-y-3">
+            <div className="flex items-center justify-between rounded-xl bg-slate-800 px-4 py-3">
+              <span className="text-sm text-slate-300">
+                Active Alerts
+              </span>
 
-    <div className="flex items-center justify-between rounded-xl bg-slate-800 px-4 py-3">
-      <span className="text-sm text-slate-300">
-        Online Devices
-      </span>
+              <span className="font-semibold text-red-400">
+                {dashboard?.activeAlerts ?? "--"}
+              </span>
+            </div>
 
-     <span className="font-semibold text-emerald-400">
-  {dashboard?.onlineDevices ?? "--"}
-</span>
-    </div>
+            <div className="flex items-center justify-between rounded-xl bg-slate-800 px-4 py-3">
+              <span className="text-sm text-slate-300">
+                API Status
+              </span>
 
-    <div className="flex items-center justify-between rounded-xl bg-slate-800 px-4 py-3">
-      <span className="text-sm text-slate-300">
-        Active Alerts
-      </span>
+              <span
+                className={`font-semibold ${
+                  dashboard ? "text-cyan-400" : "text-yellow-400"
+                }`}
+              >
+                {apiStatus}
+              </span>
+            </div>
 
-      <span className="font-semibold text-red-400">
-  {dashboard?.activeAlerts ?? "--"}
-</span>
-    </div>
+          </div>
 
-    <div className="flex items-center justify-between rounded-xl bg-slate-800 px-4 py-3">
-      <span className="text-sm text-slate-300">
-        API Status
-      </span>
+        </div>
 
-     <span
-  className={`font-semibold ${
-    dashboard ? "text-cyan-400" : "text-yellow-400"
-  }`}
->
-  {apiStatus}
-</span>
-    </div>
+        <p className="mt-8 text-center text-sm text-slate-500">
+          © 2026 HydroSmart
+        </p>
 
-  </div>
-
-</div>
-
-      <p className="mt-8 text-center text-sm text-slate-500">
-        © 2026 HydroSmart
-      </p>
-
-    </aside>
+      </aside>
+    </>
   );
 }
 
