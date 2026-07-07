@@ -151,10 +151,10 @@ function Dashboard() {
         />
 
         <LineChartCard
-  title="EC Trend"
+  title="pH Trend"
   data={chartData}
-  dataKey="ec"
-  color="#8b5cf6"
+  dataKey="ph"
+  color="#f59e0b"
 />
 
         <LineChartCard
