@@ -46,6 +46,7 @@ function Dashboard() {
     temperature: item.temperature,
     humidity: item.humidity,
     ph: item.ph,
+     ec: item.ec,
     water: item.waterLevel,
   }));
 
@@ -148,6 +149,13 @@ function Dashboard() {
           dataKey="ph"
           color="#f97316"
         />
+
+        <LineChartCard
+  title="EC Trend"
+  data={chartData}
+  dataKey="ec"
+  color="#8b5cf6"
+/>
 
         <LineChartCard
           title="Water Level Trend"
